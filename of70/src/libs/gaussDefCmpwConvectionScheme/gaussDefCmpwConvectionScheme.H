@@ -59,7 +59,7 @@ namespace fv
 extern int warnUnboundedgaussDefCmpw;
 
 /*---------------------------------------------------------------------------*\
-                       Class gaussDefCmpwConvectionScheme Declaration
+                    Class gaussDefCmpwConvectionScheme Declaration
 \*---------------------------------------------------------------------------*/
 
 template<class Type>
@@ -68,16 +68,16 @@ class gaussDefCmpwConvectionScheme
     public fv::convectionScheme<Type>
 {
     // Private data
- 
+
         word scheme_;
 
     // Private Member Functions
 
         //- Disallow default bitwise copy construct
-        gaussDefCmpwConvectionScheme(const gaussDefCmpwConvectionScheme&);
+        gaussDefCmpwConvectionScheme(const gaussDefCmpwConvectionScheme&) = delete;
 
         //- Disallow default bitwise assignment
-        void operator=(const gaussDefCmpwConvectionScheme&);
+        void operator=(const gaussDefCmpwConvectionScheme&) = delete;
 
 public:
 
@@ -92,7 +92,7 @@ public:
         (
             const fvMesh& mesh,
             const surfaceScalarField& faceFlux,
-            const word& scheme
+            Istream& scheme
         )
         :
             convectionScheme<Type>(mesh, faceFlux),
@@ -105,7 +105,7 @@ public:
             const fvMesh& mesh,
             const surfaceScalarField& faceFlux,
             Istream& is,
-            const word& scheme
+            Istream& scheme
         )
         :
             convectionScheme<Type>(mesh, faceFlux),
@@ -117,8 +117,8 @@ public:
             if
             (
                 warnUnboundedgaussDefCmpw
-             && word(mesh.ddtScheme("default")) == "steadyState"
-             && bounded != "bounded"
+                && word(mesh.ddtScheme("default")) == "steadyState"
+                && bounded != "bounded"
             )
             {
                 fileNameList controlDictFiles(findEtcFiles("controlDict"));
@@ -135,7 +135,7 @@ public:
         }
 
     // Member Functions
-
+        
 
         tmp<GeometricField<Type, fvsPatchField, surfaceMesh> > interpolate
         (
